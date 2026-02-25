@@ -1,4 +1,5 @@
 import 'package:docai_assistant/core/theme/app_colors.dart';
+import 'package:docai_assistant/core/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -61,46 +62,10 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
 
-      /* ---------------- APP BAR ---------------- */
-      appBar: AppBar(
-        elevation: 1,
-        backgroundColor: AppColors.lightBackground,
-        // leading: const BackButton(color: Colors.blue),
-        surfaceTintColor: Colors.transparent,
-        // titleSpacing: 0,
-        title: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.blue.shade50,
-              child: const Icon(Icons.smart_toy, color: Colors.blue),
-            ),
-
-            const SizedBox(width: 10),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  "AI Document Assistant",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  "Online",
-                  style: TextStyle(fontSize: 12, color: Colors.green),
-                ),
-              ],
-            ),
-          ],
-        ),
+      appBar: CommonAppBar(
+        title: "AI Document Assistant",
+        showBack: false,
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.videocam, color: Colors.grey),
-          //   onPressed: () {},
-          // ),
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.grey),
             onPressed: () {},
@@ -108,16 +73,61 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
 
+      // /* ---------------- APP BAR ---------------- */
+      // appBar: AppBar(
+      //   elevation: 1,
+      //   backgroundColor: AppColors.lightBackground,
+      //   // leading: const BackButton(color: Colors.blue),
+      //   surfaceTintColor: Colors.transparent,
+      //   // titleSpacing: 0,
+      //   title: Row(
+      //     children: [
+      //       CircleAvatar(
+      //         backgroundColor: Colors.blue.shade50,
+      //         child: const Icon(Icons.smart_toy, color: Colors.blue),
+      //       ),
+
+      //       const SizedBox(width: 10),
+
+      //       Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: const [
+      //           Text(
+      //             "AI Document Assistant",
+      //             style: TextStyle(
+      //               fontSize: 16,
+      //               color: Colors.black,
+      //               fontWeight: FontWeight.w600,
+      //             ),
+      //           ),
+      //           Text(
+      //             "Online",
+      //             style: TextStyle(fontSize: 12, color: Colors.green),
+      //           ),
+      //         ],
+      //       ),
+      //     ],
+      //   ),
+      //   actions: [
+      //     // IconButton(
+      //     //   icon: const Icon(Icons.videocam, color: Colors.grey),
+      //     //   onPressed: () {},
+      //     // ),
+      //     IconButton(
+      //       icon: const Icon(Icons.more_vert, color: Colors.grey),
+      //       onPressed: () {},
+      //     ),
+      //   ],
+      // ),
+
       /* ---------------- BODY ---------------- */
       body: SafeArea(
         child: Column(
           children: [
             // _todayChip(),
-
             Expanded(child: _chatList()),
 
-            _suggestions(),
-
+            // _suggestions(),
             _inputBar(),
           ],
         ),
@@ -246,11 +256,10 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.add, color: Colors.grey),
-            onPressed: () {},
-          ),
-
+          // IconButton(
+          //   icon: const Icon(Icons.add, color: Colors.grey),
+          //   onPressed: () {},
+          // ),
           Expanded(
             child: TextField(
               controller: _controller,
@@ -263,23 +272,32 @@ class _ChatScreenState extends State<ChatScreen> {
                   borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none,
                 ),
+                // suffixIcon: IconButton(
+                //   icon: const Icon(Icons.clear),
+                //   onPressed: _controller.text.isEmpty
+                //       ? null
+                //       : () {
+                //     setState(() { _controller.clear(); });
+                //         },
+                // ),
               ),
             ),
           ),
 
-          const SizedBox(width: 6),
+          // const SizedBox(width: 6),
+          //
+          // IconButton(
+          //   icon: const Icon(Icons.attach_file, color: Colors.grey),
+          //   onPressed: () {},
+          // ),
 
-          IconButton(
-            icon: const Icon(Icons.attach_file, color: Colors.grey),
-            onPressed: () {},
-          ),
-
-          FloatingActionButton(
-            mini: true,
-            backgroundColor: const Color(0xFF1F2AFF),
-            child: const Icon(Icons.mic),
-            onPressed: _sendMessage,
-          ),
+          // FloatingActionButton(
+          //   elevation: 0,
+          //   mini: true,
+          //   backgroundColor: const Color(0xFF1F2AFF),
+          //   onPressed: _sendMessage,
+          //   child: const Icon(Icons.mic,color: Colors.white,),
+          // ),
         ],
       ),
     );

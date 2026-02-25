@@ -1,8 +1,9 @@
+import 'package:docai_assistant/features/home/views/main_screen.dart';
 import 'package:docai_assistant/features/onboarding/views/doc_ai_loading_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-    WidgetsFlutterBinding.ensureInitialized(); // ✅ REQUIRED
+  WidgetsFlutterBinding.ensureInitialized(); // ✅ REQUIRED
   runApp(const MyApp());
 }
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true, fontFamily: 'Roboto'),
 
-      home: const DocAiLoadingScreen(),
+      home: const MainScreen(),
     );
   }
 }

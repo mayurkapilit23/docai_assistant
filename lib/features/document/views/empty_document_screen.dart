@@ -1,5 +1,7 @@
 import 'package:docai_assistant/core/theme/app_colors.dart';
+import 'package:docai_assistant/core/widgets/app_button.dart';
 import 'package:docai_assistant/core/widgets/common_app_bar.dart';
+import 'package:docai_assistant/features/upload/views/upload_screen.dart';
 import 'package:flutter/material.dart';
 
 class EmptyDocumentsScreen extends StatelessWidget {
@@ -38,7 +40,7 @@ class EmptyDocumentsScreen extends StatelessWidget {
       /// Body
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +60,11 @@ class EmptyDocumentsScreen extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      const Icon(Icons.folder, size: 70, color: Colors.blue),
+                      const Icon(
+                        Icons.folder,
+                        size: 70,
+                        color: AppColors.primary,
+                      ),
 
                       Positioned(
                         right: 45,
@@ -72,7 +78,7 @@ class EmptyDocumentsScreen extends StatelessWidget {
                           child: const Icon(
                             Icons.search,
                             size: 22,
-                            color: Colors.blue,
+                            color: AppColors.primary,
                           ),
                         ),
                       ),
@@ -102,27 +108,16 @@ class EmptyDocumentsScreen extends StatelessWidget {
               const SizedBox(height: 30),
 
               /// Upload Button
-              SizedBox(
-                width: double.infinity,
-                height: 54,
-                child: ElevatedButton.icon(
-                  icon: const Icon(Icons.add, size: 22),
-                  label: const Text(
-                    "Upload First Document",
-                    style: TextStyle(fontSize: 16),
-                  ),
-
-                  onPressed: () {
-                    // TODO: Open File Picker
-                  },
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1E33F3),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28),
-                    ),
-                  ),
-                ),
+              ///
+              AppButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => UploadScreen()),
+                  );
+                },
+                label: "Upload First Document",
+                icon: Icons.add,
               ),
 
               const SizedBox(height: 18),

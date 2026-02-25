@@ -12,14 +12,13 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.lightBackground,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // _header(),
 
               // const SizedBox(height: 24),
-
               _uploadCard(context),
 
               const SizedBox(height: 24),
@@ -123,9 +122,9 @@ class HomeScreen extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color(0xFF1F2AFF),
+          color: AppColors.primary,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: AppShadows.strong,
+          boxShadow: AppShadows.light,
           // boxShadow: [
           //   BoxShadow(
           //     color: Colors.blue.withOpacity(0.3),
@@ -204,8 +203,8 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CircleAvatar(
-              backgroundColor: Colors.blue.shade50,
-              child: Icon(icon, color: Colors.blue),
+              backgroundColor: AppColors.primary.withOpacity(.1),
+              child: Icon(icon, color: AppColors.primary),
             ),
             const SizedBox(height: 12),
             Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -225,7 +224,10 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const Spacer(),
-        TextButton(onPressed: () {}, child: const Text("View All")),
+        TextButton(
+          onPressed: () {},
+          child: const Text("View All", style: TextStyle(color: Colors.black)),
+        ),
       ],
     );
   }

@@ -1,6 +1,12 @@
+import 'dart:math';
+
 import 'package:docai_assistant/core/theme/app_colors.dart';
+import 'package:docai_assistant/core/utils/helperMethods/logger.dart';
+import 'package:docai_assistant/core/widgets/app_button.dart';
 import 'package:docai_assistant/core/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../data/repo/api_services.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -48,8 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
       /// Body
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -69,10 +74,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Colors.blue,
+                          color: AppColors.primary,
                         ),
                       ),
-                      const Icon(Icons.auto_awesome, color: Colors.blue),
+                      const Icon(Icons.auto_awesome, color: AppColors.primary),
                     ],
                   ),
 
@@ -127,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       Switch(
                         value: smartExtraction,
-                        activeColor: Colors.blue,
+                        activeColor: AppColors.primary,
                         onChanged: (v) {
                           setState(() => smartExtraction = v);
                         },
@@ -152,10 +157,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(.1),
+                          color: AppColors.primary.withOpacity(.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(Icons.wb_sunny, color: Colors.blue),
+                        child: const Icon(
+                          Icons.wb_sunny,
+                          color: AppColors.primary,
+                        ),
                       ),
 
                       const SizedBox(width: 12),
@@ -179,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   Switch(
                     value: lightTheme,
-                    activeColor: Colors.blue,
+                    activeColor: AppColors.primary,
                     onChanged: (v) {
                       setState(() => lightTheme = v);
                     },
@@ -197,9 +205,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 style: TextStyle(
                   fontSize: 12,
                   letterSpacing: 2,
-                  color: Colors.blue.withOpacity(.4),
+                  color: AppColors.primary.withOpacity(.4),
                 ),
               ),
+            ),
+            const SizedBox(height: 40),
+
+            AppButton(
+              onPressed: () async {
+                final msg = await ApiService.testApi();
+
+                showLog("TestApi", msg);
+              },
+              label: "Health Check API",
             ),
           ],
         ),

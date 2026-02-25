@@ -4,6 +4,7 @@ import 'package:docai_assistant/features/document/views/empty_document_screen.da
 import 'package:docai_assistant/features/home/views/home_screen.dart';
 import 'package:docai_assistant/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     EmptyDocumentsScreen(),
     ChatScreen(),
-    SettingsScreen()
+    SettingsScreen(),
   ];
 
   @override
@@ -35,30 +36,40 @@ class _MainScreenState extends State<MainScreen> {
         },
 
         height: 72,
-        // backgroundColor: const Color(0xFF171A21),
         backgroundColor: AppColors.textLight,
-        // dark card
         indicatorColor: AppColors.primary.withOpacity(0.15),
 
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
+        destinations: [
+          const NavigationDestination(
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedHome01),
+            selectedIcon: HugeIcon(
+              icon: HugeIcons.strokeRoundedHome01,
+              color: AppColors.primary,
+            ),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.document_scanner),
-            selectedIcon: Icon(Icons.fitness_center),
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedDocumentAttachment),
+            selectedIcon: HugeIcon(
+              icon: HugeIcons.strokeRoundedDocumentAttachment,
+              color: AppColors.primary,
+            ),
             label: 'Document',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.show_chart_outlined),
-            selectedIcon: Icon(Icons.stars),
+          const NavigationDestination(
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedStars),
+            selectedIcon: HugeIcon(
+              icon: HugeIcons.strokeRoundedStars,
+              color: AppColors.primary,
+            ),
             label: 'AI Chat',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
+          const NavigationDestination(
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedSettings01),
+            selectedIcon: HugeIcon(
+              icon: HugeIcons.strokeRoundedSettings01,
+              color: AppColors.primary,
+            ),
             label: 'Settings',
           ),
         ],

@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
 
+/// Centralized reusable shadow styles
 class AppShadows {
-  /// Subtle shadow for cards or containers
+  AppShadows._();
+
+  /// Very subtle shadow (barely visible)
   static List<BoxShadow> subtle = [
     BoxShadow(
-      color: Colors.black.withOpacity(0.05),
-      blurRadius: 4,
+      color: Colors.black.withOpacity(.03),
+      blurRadius: 1,
+      offset: const Offset(0, 1),
+    ),
+  ];
+
+  /// Light shadow (small elevation)
+  static List<BoxShadow> light = [
+    BoxShadow(
+      color: Colors.black.withOpacity(.05),
+      blurRadius: 2,
       offset: const Offset(0, 2),
     ),
   ];
 
-  /// Medium shadow for elevated components
+  /// Medium shadow (default card style)
   static List<BoxShadow> medium = [
     BoxShadow(
-      color: Colors.black.withOpacity(0.1),
-      blurRadius: 8,
+      color: Colors.black.withOpacity(.1),
+      blurRadius: 6,
       offset: const Offset(0, 4),
     ),
   ];
 
-  /// Strong shadow for modals or floating elements
-  static List<BoxShadow> strong = [
+  /// Heavy shadow (for modals, floating elements)
+  static List<BoxShadow> heavy = [
     BoxShadow(
-      color: Colors.black.withOpacity(0.2),
+      color: Colors.black.withOpacity(.2),
       blurRadius: 12,
       offset: const Offset(0, 6),
     ),
-  ];
-
-  /// Glow-like shadow (e.g., for highlights)
-  static List<BoxShadow> glow(Color color) => [
-    BoxShadow(color: color.withOpacity(0.6), blurRadius: 16, spreadRadius: 2),
   ];
 }

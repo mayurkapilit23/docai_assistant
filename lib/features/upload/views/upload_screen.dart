@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:docai_assistant/core/theme/app_colors.dart';
+import 'package:docai_assistant/core/widgets/app_button.dart';
 import 'package:docai_assistant/core/widgets/common_app_bar.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -116,26 +118,35 @@ class _UploadScreenState extends State<UploadScreen> {
 
       /* ---------------- BODY ---------------- */
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    _uploadBox(),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
 
-                    const SizedBox(height: 28),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _uploadBox(),
 
-                    _currentUploads(),
-                    selectedFilePreview(),
-                  ],
+                      const SizedBox(height: 28),
+
+                      // _currentUploads(),
+                      selectedFilePreview(),
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-            _processButton(),
-          ],
+              // _processButton(),
+              // AppButton(
+              //   backgroundColor: AppColors.primary,
+              //   onPressed: () {},
+              //   label: "Process with AI",
+              //   icon: Icons.auto_awesome,
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -156,46 +167,61 @@ class _UploadScreenState extends State<UploadScreen> {
           BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 6),
         ],
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _getFileIcon(selectedFileName!),
+          Row(
+            children: [
+              _getFileIcon(selectedFileName!),
 
-          const SizedBox(width: 8),
+              const SizedBox(width: 8),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// File Name
-                Text(
-                  selectedFileName!,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// File Name
+                    Text(
+                      selectedFileName!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+
+                    const SizedBox(height: 2),
+
+                    /// File Type + Size
+                    Text(
+                      "$fileType • ${selectedFileSize!.toStringAsFixed(2)} MB",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
                 ),
+              ),
 
-                const SizedBox(height: 2),
-
-                /// File Type + Size
-                Text(
-                  "$fileType • ${selectedFileSize!.toStringAsFixed(2)} MB",
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
-            ),
+              /// Remove Button
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    selectedFile = null;
+                    selectedFileName = null;
+                    selectedFileSize = null;
+                  });
+                },
+              ),
+            ],
           ),
 
-          /// Remove Button
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              setState(() {
-                selectedFile = null;
-                selectedFileName = null;
-                selectedFileSize = null;
-              });
-            },
-          ),
+          const SizedBox(height: 12),
+
+          /// Progress Bar
+          _progressBar(),
+
+          const SizedBox(height: 6),
+
+          /// Progress Info
+          _progressInfo(),
         ],
       ),
     );
@@ -204,64 +230,71 @@ class _UploadScreenState extends State<UploadScreen> {
   /* ---------------- UPLOAD BOX ---------------- */
 
   Widget _uploadBox() {
-    return Container(
-      height: 260,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF1F3FF),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: const Color(0xFF8E9BFF),
-          width: 1.5,
-          style: BorderStyle.solid,
-        ),
+    return DottedBorder(
+      options: RoundedRectDottedBorderOptions(
+        radius: Radius.circular(20),
+        color: AppColors.primary,
+        dashPattern: [10, 2.5],
+        strokeWidth: 1,
+        // padding: EdgeInsets.all(16),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 28,
-            backgroundColor: Colors.blue.shade100,
-            child: const Icon(
-              Icons.cloud_upload,
-              size: 32,
-              color: Color(0xFF1F2AFF),
-            ),
-          ),
-
-          const SizedBox(height: 18),
-
-          const Text(
-            "Tap or drag to upload",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-
-          const SizedBox(height: 6),
-
-          const Text(
-            "PDF, DOCX, or TXT (Max 50MB)",
-            style: TextStyle(fontSize: 13, color: Colors.grey),
-          ),
-
-          const SizedBox(height: 20),
-
-          ElevatedButton(
-            onPressed: pickDocument,
-            // onPressed: () {
-            //   debugPrint("Select File");
-            // },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue.shade100,
-              foregroundColor: const Color(0xFF1F2AFF),
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
+      child: Container(
+        height: 260,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF1F3FF),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 28,
+              backgroundColor: AppColors.primary.withOpacity(.1),
+              child: Icon(
+                Icons.cloud_upload,
+                size: 32,
+                color: AppColors.primary,
               ),
-              elevation: 0,
             ),
-            child: const Text("Select File"),
-          ),
-        ],
+
+            const SizedBox(height: 18),
+
+            const Text(
+              "Tap or drag to upload",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+
+            const SizedBox(height: 6),
+
+            const Text(
+              "PDF, DOCX, or TXT (Max 50MB)",
+              style: TextStyle(fontSize: 13, color: Colors.grey),
+            ),
+
+            const SizedBox(height: 20),
+
+            ElevatedButton(
+              onPressed: pickDocument,
+              // onPressed: () {
+              //   debugPrint("Select File");
+              // },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary.withOpacity(.1),
+                foregroundColor: AppColors.primary,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 28,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                elevation: 0,
+              ),
+              child: const Text("Select File"),
+            ),
+          ],
+        ),
       ),
     );
   }
