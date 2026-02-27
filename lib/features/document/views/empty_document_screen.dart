@@ -1,8 +1,10 @@
 import 'package:docai_assistant/core/theme/app_colors.dart';
 import 'package:docai_assistant/core/widgets/app_button.dart';
 import 'package:docai_assistant/core/widgets/common_app_bar.dart';
-import 'package:docai_assistant/features/upload/views/upload_screen.dart';
+import 'package:docai_assistant/features/document/views/upload_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/theme/app_theme_colors.dart';
 
 class EmptyDocumentsScreen extends StatelessWidget {
   const EmptyDocumentsScreen({super.key});
@@ -10,34 +12,7 @@ class EmptyDocumentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
-
       appBar: CommonAppBar(title: "Documents", showBack: false),
-
-      /// AppBar
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   centerTitle: true,
-      //   title: const Text(
-      //     "Documents",
-      //     style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
-      //   ),
-
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.menu, color: Colors.black),
-      //     onPressed: () {},
-      //   ),
-
-      //   actions: [
-      //     IconButton(
-      //       icon: const Icon(Icons.search, color: Colors.black),
-      //       onPressed: () {},
-      //     ),
-      //   ],
-      // ),
-
-      /// Body
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -125,11 +100,13 @@ class EmptyDocumentsScreen extends StatelessWidget {
               /// Learn More
               TextButton(
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   "Learn how it works",
                   style: TextStyle(
-                    color: Color(0xFF1E33F3),
                     fontWeight: FontWeight.w500,
+                    color: Theme.of(
+                      context,
+                    ).extension<AppThemeColors>()?.textPrimary,
                   ),
                 ),
               ),

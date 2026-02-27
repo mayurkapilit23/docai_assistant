@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../../../../core/utils/contants/api_contants.dart';
+import '../../../../core/utils/constants/api_constants.dart';
+import '../../../../core/utils/helperMethods/logger.dart';
 
 class ApiService {
   static Future<dynamic> testApi() async {
     final apiUrl = ApiConstants.getDocs;
-    // showLog("getUserProfile ApiUrl: ", apiUrl);
+    showLog("ApiUrl: ", apiUrl);
 
-    // showLog("Headers: ", headers);
     try {
       final response = await http.get(Uri.parse(apiUrl));
-      // showLog("Api Response:", response.body);
+      showLog("Api Response:", response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return data;
@@ -20,7 +20,7 @@ class ApiService {
         throw Exception("Server Error");
       }
     } catch (e) {
-      // showLog("Api Error:", {e.toString()});
+      showLog("Api Error:", {e.toString()});
       throw Exception(e);
     }
   }

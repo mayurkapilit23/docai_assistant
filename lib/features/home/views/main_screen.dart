@@ -1,9 +1,12 @@
 import 'package:docai_assistant/core/theme/app_colors.dart';
+import 'package:docai_assistant/features/chat/bloc/chat_bloc.dart';
+import 'package:docai_assistant/features/chat/data/repo/chat_repo.dart';
 import 'package:docai_assistant/features/chat/views/chat_screen.dart';
 import 'package:docai_assistant/features/document/views/empty_document_screen.dart';
 import 'package:docai_assistant/features/home/views/home_screen.dart';
 import 'package:docai_assistant/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,7 +19,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = const [
+  final List<Widget> _screens = [
     HomeScreen(),
     EmptyDocumentsScreen(),
     ChatScreen(),
@@ -26,8 +29,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
-      body: SafeArea(child: _screens[_currentIndex]),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      // body: SafeArea(child: _screens[_currentIndex]),
+      body: IndexedStack(index: _currentIndex, children: _screens),
 
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
@@ -36,7 +40,8 @@ class _MainScreenState extends State<MainScreen> {
         },
 
         height: 72,
-        backgroundColor: AppColors.textLight,
+        backgroundColor: Theme.of(context).cardColor,
+        // backgroundColor: AppColors.textLight,
         indicatorColor: AppColors.primary.withOpacity(0.15),
 
         destinations: [

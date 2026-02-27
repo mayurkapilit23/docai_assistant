@@ -6,6 +6,10 @@ class ApiConstants {
 
   // Endpoints
   static const String uploadFile = "$baseUrl/upload";
+
+  //http://localhost:5000/api/documents/upload-multiple
+  static const String uploadMultipleDoc = "$baseUrl/documents/upload-multiple";
+
   // http://localhost:5000/api/documents/
   static const String getDocs = "$baseUrl/documents";
   static const String deleteFile = "$baseUrl/files/delete";

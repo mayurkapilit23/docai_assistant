@@ -1,7 +1,11 @@
 import 'package:docai_assistant/core/theme/app_colors.dart';
 import 'package:docai_assistant/core/utils/app_shadows.dart';
-import 'package:docai_assistant/features/upload/views/upload_screen.dart';
+import 'package:docai_assistant/features/document/views/upload_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../document/bloc/document_bloc.dart';
+import '../../document/data/repo/document_repo.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,7 +13,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      // backgroundColor: AppColors.lightBackground,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -23,7 +28,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              _actionCards(),
+              _actionCards(context),
 
               const SizedBox(height: 28),
 
@@ -38,6 +43,7 @@ class HomeScreen extends StatelessWidget {
                 Colors.red.shade100,
                 Icons.picture_as_pdf,
                 Colors.red,
+                context,
               ),
 
               _recentItem(
@@ -47,6 +53,7 @@ class HomeScreen extends StatelessWidget {
                 Colors.blue.shade100,
                 Icons.description,
                 Colors.blue,
+                context,
               ),
 
               _recentItem(
@@ -56,6 +63,7 @@ class HomeScreen extends StatelessWidget {
                 Colors.green.shade100,
                 Icons.picture_as_pdf,
                 Colors.green,
+                context,
               ),
             ],
           ),
@@ -117,7 +125,12 @@ class HomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => UploadScreen()),
+        MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => DocumentBloc(DocumentRepo()),
+            child: const UploadScreen(),
+          ),
+        ),
       ),
       child: Container(
         padding: const EdgeInsets.all(20),
@@ -178,22 +191,22 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _actionCards() {
+  Widget _actionCards(BuildContext context) {
     return Row(
       children: [
-        _smallCard(Icons.psychology, "Ask AI", "Query intelligence"),
+        _smallCard(Icons.psychology, "Ask AI", "Query intelligence", context),
         const SizedBox(width: 16),
-        _smallCard(Icons.history, "History", "Past interactions"),
+        _smallCard(Icons.history, "History", "Past interactions", context),
       ],
     );
   }
 
-  Widget _smallCard(IconData icon, String title, String sub) {
+  Widget _smallCard(IconData icon, String title, String sub, context) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
@@ -224,10 +237,7 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const Spacer(),
-        TextButton(
-          onPressed: () {},
-          child: const Text("View All", style: TextStyle(color: Colors.black)),
-        ),
+        TextButton(onPressed: () {}, child: const Text("View All")),
       ],
     );
   }
@@ -239,12 +249,14 @@ class HomeScreen extends StatelessWidget {
     Color bg,
     IconData icon,
     Color iconColor,
+    context,
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
+        // color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),

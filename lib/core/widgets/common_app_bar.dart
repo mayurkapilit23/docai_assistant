@@ -19,18 +19,20 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColors.lightBackground,
-      foregroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      // backgroundColor: AppColors.lightBackground,
+      // foregroundColor: Theme.of(context).primaryColor,
       surfaceTintColor: Colors.transparent,
       title: Text(
         title,
-        style: AppTextStyle.heading2.copyWith(color: AppColors.textDark),
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        // style: AppTextStyle.heading2.copyWith(color: AppColors.textDark),
       ),
       centerTitle: centerTitle,
       elevation: 0,
       leading: showBack
           ? IconButton(
-              icon: const Icon(Icons.arrow_back, color: AppColors.textDark),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () => Navigator.pop(context),
             )
           : null,
